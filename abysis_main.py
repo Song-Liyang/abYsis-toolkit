@@ -7,9 +7,10 @@ from abysis.data_extractor import data_fetch, data_analyse
 from abysis.web_scraper import get_driver, connect_to_base,write_to_file
 
 # all varies should be specified
-FILEDIR = "D://abysis_output//20200319_1"     # Your working dir with input file e.g. "D://abysis_output//test"
-INPUT = "pending_input20200319_0.csv"                     # Your input file name e.g. "input.csv"
-CDR_REGION = "kabat"                    # CDR_region definition
+FILEDIR = "D://abysis_output//test"     # Your working dir with input file e.g. "D://abysis_output//test"
+INPUT = "input.csv"         # Your input file name e.g. "input.csv"
+NUMBERING_SCHEME = "kabat"                    # Numbering Scheme name, lowercase
+CDR_REGION = "kabat"                          # CDR_region definition, lowercase
 
 
 def input_reader(input_filename):
@@ -25,7 +26,7 @@ def run_process(aa_id, aa_sequence):
         # html = browser.page_source
         idnum = connect_return[1]
         browser.quit()
-        fetch = data_fetch(idnum, aa_id, aa_sequence, CDR_REGION)
+        fetch = data_fetch(idnum, aa_id, aa_sequence, NUMBERING_SCHEME, CDR_REGION)
         if fetch[0]:
             output_df = data_analyse(fetch[1], CDR_REGION)
             write_to_file(output_df, aa_id, FILEDIR)

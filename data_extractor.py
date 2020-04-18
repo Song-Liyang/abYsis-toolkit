@@ -3,11 +3,11 @@ import requests
 import hjson
 import time
 
-def data_fetch(idNum, aa_id, aa_sequence, CDR_REGION):
+def data_fetch(idNum, aa_id, aa_sequence, NUMBERING_SCHEME, CDR_REGION):
     "Download and parse the data, save to a csv file"
     # 请求数据
     numUrl = 'http://home.stagleys.co.uk/abysis/sequence_input/key_annotation/numberingPanel.cgi'
-    numForm = f"uid=ID{idNum}&selectedColour=Taylor&scheme_name={CDR_REGION}&region_def_name={CDR_REGION}&format=summary_format&aa_sequence={aa_sequence}&organism_id=not_selected"
+    numForm = f"uid=ID{idNum}&selectedColour=Taylor&scheme_name={NUMBERING_SCHEME}&region_def_name={CDR_REGION}&format=summary_format&aa_sequence={aa_sequence}&organism_id=not_selected"
     # heatmapUrl = 'http://home.stagleys.co.uk/abysis/sequence_input/key_annotation/heatmapPanel.cgi'
     # heatmapForm = f"uid=ID{idNum}&selectedColour=Taylor&scheme_name={CDR_REGION}&region_def_name={CDR_REGION}&scaled=0&distribution_target=ID{idNum}_heatmapdistribution&aa_sequence={aa_sequence}&organism_id=not_selected&organism_id2=31"
     connection_attempts = 0
@@ -35,7 +35,7 @@ def data_analyse(numRes, CDR_REGION):
         if line.startswith("var schemeNumbers = "):
             match = line.lstrip("var schemeNumbers = ").rstrip(";")
             schemeDict = hjson.loads(match)
-    scheme = schemeDict[f"{CDR_REGION}"]
+    scheme = schemeDict[f"{NUMBERING_SCHEME}"]
 
     # cdrRegion extract, use "CDR_REGION" for para
     for line in numRes:
@@ -52,7 +52,7 @@ def data_analyse(numRes, CDR_REGION):
             match = line.lstrip("var frequencies = ").rstrip(";")
             freqsDict = hjson.loads(match)
     for entry in freqsDict:
-        if entry['schemename'] == f"{CDR_REGION}":
+        if entry['schemename'] == f"{NUMBERING_SCHEME}":
             freqs = entry['freqs']
 
     # Frequencies extract
@@ -62,10 +62,10 @@ def data_analyse(numRes, CDR_REGION):
             resfreqsDict = hjson.loads(match)
     resfreqsDict = hjson.loads(match)
     for entry in resfreqsDict['org1']:
-        if entry['scheme_name'] == f"{CDR_REGION}":
+        if entry['scheme_name'] == f"{NUMBERING_SCHEME}":
             resfreqs = entry['frequencies']
 
-    # list max frequent residuals in distribution
+    # list max frequent residues in distribution
 
     for site in resfreqs:
         total = site['total']
@@ -80,7 +80,7 @@ def data_analyse(numRes, CDR_REGION):
         site['maxaa'] = Maxaa
 
     maxPercentage = [site['maxfreqs'] for site in resfreqs]
-    maxResiduals = [site['maxaa'] for site in resfreqs]
-    df = {'residues':residues, 'scheme_number':scheme, 'regions':regions, 'frequencies':freqs, 'max_residuals':maxResiduals, 'max_residual_ratio':maxPercentage}
+    maxResidues = [site['maxaa'] for site in resfreqs]
+    df = {'residues':residues, 'scheme_number':scheme, 'regions':regions, 'frequencies':freqs, 'max_residues':maxResidues, 'max_residues_ratio':maxPercentage}
 
     return df

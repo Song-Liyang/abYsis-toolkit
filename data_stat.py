@@ -3,8 +3,8 @@ import pandas as pd
 
 
 # all varies should be specified
-SAVEFILE = "D://abysis_output//20200319_1//20200319_1_summary.csv"     # output csv path and name e.g. "D://abysis_output//test//summary.csv"
-DATADIR = "D://abysis_output//20200319_1//data"     # Your data dir with working file e.g. "D://abysis_output//test//data"
+SAVEFILE = "D://abysis_output//test//summary.csv"  # output csv path and name e.g. "D://abysis_output//test//summary.csv"
+DATADIR = "D://abysis_output//test//data"          # Your data dir with working file e.g. "D://abysis_output//test//data"
 threshold1 = 1      # percentage, e.g. 5 for under 5%
 threshold2 = 3      # percentage, e.g. 5 for under 5%
 
@@ -21,7 +21,7 @@ def freq_filter(df,threshold):
             fr += 1
         if row['frequencies'] < threshold and row['regions'].startswith('CDR'):
             cdr += 1
-        if row['frequencies'] < threshold and row['max_residual_ratio'] > 0.5 :
+        if row['frequencies'] < threshold and row['max_residue_ratio'] > 0.5 :
             max += 1
     return fr,cdr,max,aa
 
