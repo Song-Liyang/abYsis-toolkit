@@ -4,7 +4,7 @@ https://github.com/Song-Liyang/abYsis-toolkit
 This program was written by Song Liyang (songly@pku.edu.cn), Peking University.
 
 abYsis is a famous web-based antibody research system that includes an integrated database of antibody sequence and structure data. It's very useful for antibody research when we want a quick homology search and annotation of a antibody sequences using the Blast algorithm.   
-With the lack of API sockets for this platform, here is a toolkit to query, download, analysis, stat the data from abYsis.  
+With the lack of API sockets for this platform, here is a toolkit to query, download, parse and stat the data from abYsis.  
 
 **Read [LISENCE](/LISENCE) first.**
 > You can read, download and run materials from this repositories only for your own personal, non-commercial use. You may NOT otherwise copy, reproduce, retransmit, distribute, publish, commercially exploit or otherwise transfer any material, nor may you modify or create derivatives works of the material. If you want any rights restricted in GNU v3, you should ask [songly(at)pku.edu.cn] for my agreement.  
